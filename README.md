@@ -247,9 +247,9 @@ Giả sử như ta vừa đưa ra kết quả truy xuất là có d1, d2 liên q
 
 |                     | today | big  | small |
 |:-------------------:|:-----:|:---: |:-----:|
-| p(term_doc \|R=1,q) |  0.75 | 0.75 |  0.5  |
-| p(term_doc \|R=0,q) |  0.75 | 0.25 |  0.5  |
-|        weight       |   1   |  3   |   1   |
+| p(term_doc \|R=1,q) |  0.75 | 0.75 |  0.75 |
+| p(term_doc \|R=0,q) |  0.75 | 0.25 |  0.25 |
+|        weight       |   1   |  3   |   3   |
 
 ## *2.3. Lập chỉ mục*
 Chỉ mục trong BIM sẽ có dạng word -> từ điển -> posting list -> weight.
