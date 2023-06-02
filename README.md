@@ -150,6 +150,8 @@ rel2 = cos(d2,query) = 0.47033613
 
 Từ kết quả trên ta thấy rằng, tài liệu 1 có độ liên quan lớn hơn với tài liệu 2 và ta xếp hạng [doc1, doc2].
 
+![final](./imgs/vector_final.png)
+
 ## *1.5. Đánh giá mô hình Vector Space*
 ### Ưu điểm
 
@@ -299,3 +301,8 @@ Về mặt lý thuyết, sơ đồ xếp hạng tối ưu hơn Vector Space.
 Không sử dụng TF.
 
 Tính toán khá nhiều.
+
+# *Đánh giá các mô hình*
+
+Có
+Đa số người dùng sẽ không xem đến trang thứ 2, nên đánh giá dựa trên kết quả của 10 tài liệu đầu tiên
