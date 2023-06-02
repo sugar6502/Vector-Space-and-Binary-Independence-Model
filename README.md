@@ -150,6 +150,8 @@ rel2 = cos(d2,query) = 0.47033613
 
 Từ kết quả trên ta thấy rằng, tài liệu 1 có độ liên quan lớn hơn với tài liệu 2 và ta xếp hạng [doc1, doc2].
 
+Hình ảnh dưới đây mô tả lại quy trình hoạt động của mô hình Vector Space.
+
 ![final](./imgs/vector_final.png)
 
 ## *1.5. Đánh giá mô hình Vector Space*
@@ -208,7 +210,7 @@ Tương tư như mô hình Vector Space.
 
 ## *2.2 Tính trọng số cho các term*
 Việc tính weight các term sẽ được tính theo 2 trường hợp:
-- Trường hợp chúng ta không có thông tin rằng tài liệu nào là có liên quan hoặc không. Thông tin duy nhất chúng ta biết là từ câu truy vấn và ta không có cách nào để ước tunhs được term của câu truy vấn xuất hiện như thế nào (tần số) trong các tài liệu liên quan, do đó, ta có 2 giả định:
+- Trường hợp chúng ta không có thông tin rằng tài liệu nào là có liên quan hoặc không. Thông tin duy nhất chúng ta biết là từ câu truy vấn và ta không có cách nào để ước tính được term của câu truy vấn xuất hiện như thế nào (tần số) trong các tài liệu liên quan, do đó, ta có 2 giả định:
     - Term của truy vấn xuất hiện hay không xuất hiện trong tài liệu liên quan là như nhau: p(term_i|q, R = 1 ) = 0.5
     -  Xác suất term xuất hiện trong tài liệu không liên quan tỉ lệ thuận với số tài liệu chứa term trong tập tài liệu: p(term_i|q, R = 0 ) = Số tài liệu chứa term / tổng số tài liệu.
 
@@ -237,21 +239,17 @@ Tập tài liệu:
 
 
 Ví dụ:
+Giả sử như ta vừa đưa ra kết quả truy xuất là có d1, d2 liên quan đến câu truy vấn từ bảng trọng số trên. Và người dùng phản hồi lại cho cho ta là chỉ có d1 là liên quan đến câu truy vấn, lúc này, ta thực hiện cập nhật lại bảng trọng số như sau.
+- Có Nr = 1 (d1) tài liệu liên quan cho câu truy vấn trên và:
+    - R_today = 1, N_today = 1
+    - R_big = 1, N_big = 1
+    - R_small = 0, N_small = 0
 
-Tập tài liệu gồm 5 tài liệu:
-- d1: today big
-- d2: small today
-- Câu truy vấn: today big small
-- Có Nr = 4 tài liệu liên quan cho câu truy vấn trên và:
-    - R_today = 1, N_today = 2
-    - R_big = 2, N_big = 3
-    - R_small = 4, N_small = 4
-
-|                     | today | big | small |
-|:-------------------:|:-----:|:---:|:-----:|
-| p(term_doc \|R=1,q) |  3/10 | 1/2 |  9/10 |
-| p(term_doc \|R=0,q) |  3/4  | 3/4 |  1/4  |
-|        weight       |  2/5  | 2/3 |  18/5 |
+|                     | today | big  | small |
+|:-------------------:|:-----:|:---: |:-----:|
+| p(term_doc \|R=1,q) |  0.75 | 0.75 |  0.5  |
+| p(term_doc \|R=0,q) |  0.75 | 0.25 |  0.5  |
+|        weight       |   1   |  3   |   1   |
 
 ## *2.3. Lập chỉ mục*
 Chỉ mục trong BIM sẽ có dạng word -> từ điển -> posting list -> weight.
@@ -289,6 +287,10 @@ rel(d2) = 0.5
 
 Từ kết quả trên ta thấy rằng, tài liệu 1 có độ liên quan bằng với tài liệu 2. 
 
+Hình ảnh dưới đây mô tả lại quy trình hoạt động của mô hình BIM.
+
+![final](./imgs/bim_final.png)
+
 ## *2.5. Đánh giá BIM*
 ### Ưu điểm
 
@@ -304,5 +306,6 @@ Tính toán khá nhiều.
 
 # *Đánh giá các mô hình*
 
-Có
+/Khúc này để cho đồ án chưa seminar/
+
 Đa số người dùng sẽ không xem đến trang thứ 2, nên đánh giá dựa trên kết quả của 10 tài liệu đầu tiên
