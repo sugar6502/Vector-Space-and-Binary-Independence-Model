@@ -173,7 +173,7 @@ Ví dụ:
 d1: today big -> (today,big,small) = 1,1,0
 d2: small today -> (today,big,small) = 1,0,1
 
-Sự liên quan của truy vấn và tài liệu được biểu diễn sẽ được thể hiện trong biến nhị phân:
+Sự liên quan của truy vấn và tài liệu được biểu diễn thể hiện trong biến nhị phân:
 - R = 1 - d,q có liên quan.
 - R = 0 - d,q không liên quan.
 
@@ -205,6 +205,7 @@ Và giả định:
 <div align="center">p(term_i|q, R = 1 ) = p(term_i|q, R = 0 ) </div>
 
 Do đó ta chỉ cần tính những term thuộc câu truy vấn, vậy sự liên quan của tài liệu và truy vấn sẽ được thể hiện như sau:
+
 ![bim1](./imgs/bim1.png)
 
 
