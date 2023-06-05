@@ -3,6 +3,7 @@
 # 1. Mô hình Vector Space
 Ý tưởng của mô hình Vector Space là biểu diễn văn bản và các câu truy vấn dưới dạng các vector term với cơ sở rằng nếu 2 vector trong không gian càng gần nhau thì độ liên quan giữa câu truy vấn đó và tài liệu tương ứng càng cao.
 
+
 ![vector](./imgs/vector_space.png)
 
 Ví dụ:
@@ -34,7 +35,7 @@ Một term có thể được hiểu là yếu tố cấu tạo thành tài li�
 - Term là một từ gốc (có thể không hoặc có nghĩa), không chứa số và kí hiệu đặc biệt: experimental -> experi, /destalling/ -> destal,...
 
 *Quá trình hình thành term*:
-- Lọc tất cả các chữ số có trong tài liệu (isdigit).
+- Xóa tất cả các chữ số có trong tài liệu (isdigit).
 
 ![isdigit](./imgs/isdigit.png)
 
@@ -48,7 +49,7 @@ Một term có thể được hiểu là yếu tố cấu tạo thành tài li�
 
 ![stopwords](./imgs/stopwords.png)
 
-- Đưa từ về từ gốc bằng PorterStemmer. Việc lấy từ gốc sẽ đưa các từ về cùng một trường từ vựng, ví dụ:.....
+- Đưa từ về từ gốc bằng PorterStemmer. Việc lấy từ gốc sẽ đưa các từ về cùng một trường từ vựng, ví dụ: experimental -> experi, experiment -> experi
 
 ![stem](./imgs/stem.png)
 
@@ -107,9 +108,9 @@ d2: small today
 Chỉ mục sẽ có dạng:
 
 
-- today: {'So_luong_tai_lieu': 2, 'Tan_so': 2, 'Posting': [[1, 1, 0.35], [2, 1, 0.35] ]}
-- big: {'So_luong_tai_lieu': 1, 'Tan_so': 1, 'Posting': [[1, 1,  0.94] ]}
-- small: {'So_luong_tai_lieu': 1, 'Tan_so': 1, 'Posting': [[2, 1, 0.94] ]}
+- today: {'So_luong_tai_lieu': 2, 'Tan_so': 2, 'Posting': [[1, 1, 0.18], [2, 1, 0.18] ]}
+- big: {'So_luong_tai_lieu': 1, 'Tan_so': 1, 'Posting': [[1, 1,  0.48] ]}
+- small: {'So_luong_tai_lieu': 1, 'Tan_so': 1, 'Posting': [[2, 1, 0.48] ]}
 
 ## *1.4. Xử lý truy vấn*
 
@@ -166,7 +167,13 @@ Có nhiều các tính trọng số và độ liên quan khác nhau.
 Phải cân nhắc lựa chọn các cách tính phù hợp.
 
 # Mô hình BIM
-Mô hình độc lập nhị phân ( Binary Independence Model ) là mô hình truy xuất thông tin dựa trên xác suất. Sự liên quan của truy vấn và tài liệu được biểu diễn sẽ được thể hiện trong biến nhị phân:
+Mô hình độc lập nhị phân ( Binary Independence Model ) là mô hình truy xuất thông tin dựa trên xác suất. Mô hình nãy biểu diễn các tài liệu dưới dạng các vector nhị phân (x1,...xm) với xi = 1 khi term đó xuất hiện và ngược lại. Tương tự với câu truy vấn
+
+Ví dụ:
+d1: today big -> (today,big,small) = 1,1,0
+d2: small today -> (today,big,small) = 1,0,1
+
+Sự liên quan của truy vấn và tài liệu được biểu diễn sẽ được thể hiện trong biến nhị phân:
 - R = 1 - d,q có liên quan.
 - R = 0 - d,q không liên quan.
 
@@ -198,21 +205,51 @@ Và giả định:
 <div align="center">p(term_i|q, R = 1 ) = p(term_i|q, R = 0 ) </div>
 
 Do đó ta chỉ cần tính những term thuộc câu truy vấn, vậy sự liên quan của tài liệu và truy vấn sẽ được thể hiện như sau:
-
 ![bim1](./imgs/bim1.png)
 
 
+Do di nhận giá trị nhị phân nên:
 
+![bim2](./imgs/bim2.png)
+
+Tiếp tục phân tích, ta được:
+
+![bim3](./imgs/bim3.png)
+
+Dễ nhận thấy, phần bên phải của công thức nhân là hằng số, do đó ta có thể bỏ qua giá trị này. Sau khi đã lược bỏ, ta thấy rằng giá trị odds xếp hạng lúc này chỉ phụ thuộc vào vị trí term đó xuất hiện trong câu truy vấn và xuất hiện trong cả tài liệu (di=1,qi=1).
 
 
 ## *2.1 Trích xuất các term*
 Tương tư như mô hình Vector Space.
 
 ## *2.2 Tính trọng số cho các term*
+
+Tổng quát ta có:
+
+|       tài liệu      | liên quan | không liên quan | tổng |
+|:-------------------:|:---------:|:---------------:|:----:|
+|        di = 1       |     Rt    |       Nt-Rt     |  Nt  |
+|        di = 0       |    Nr-Rt  |     N-Nr-Nt+Rt  | N-Nt |
+|        tổng         |     Nr    |       N-Nr      |  N   |
+
+Với:
+
+- Rt: số tài liệu có liên quan chứa term di.
+- Nr: tổng số tài liệu có liên quan.
+- Nt: Nt là tổng số tài liệu chứa term di.
+- N: tổng số tài liệu.
+
+Vậy: 
+
+![bim4](./imgs/bim4.png)
+
+
+
 Việc tính weight các term sẽ được tính theo 2 trường hợp:
-- Trường hợp chúng ta không có thông tin rằng tài liệu nào là có liên quan hoặc không. Thông tin duy nhất chúng ta biết là từ câu truy vấn và ta không có cách nào để ước tính được term của câu truy vấn xuất hiện như thế nào (tần số) trong các tài liệu liên quan, do đó, ta có 2 giả định:
-    - Term của truy vấn xuất hiện hay không xuất hiện trong tài liệu liên quan là như nhau: p(term_i|q, R = 1 ) = 0.5
-    -  Xác suất term xuất hiện trong tài liệu không liên quan tỉ lệ thuận với số tài liệu chứa term trong tập tài liệu: p(term_i|q, R = 0 ) = Số tài liệu chứa term / tổng số tài liệu.
+- Trường hợp chúng ta không có thông tin rằng tài liệu nào là có liên quan hoặc không (chưa biết Nr,...). Thông tin duy nhất chúng ta biết là từ câu truy vấn và ta không có cách nào để ước tính được term của câu truy vấn xuất hiện như thế nào (tần số) trong các tài liệu liên quan, do đó, ta có 2 giả định:
+    - Term của truy vấn xuất hiện hay không xuất hiện trong tài liệu liên quan là như nhau: Rt = Nr-Rt -> p(term_i|q, R = 1 ) = 0.5
+
+    - Các tài liệu liên quan chiếm tỉ lệ rất nhỏ trong bộ tài liệu (do không có thông tin) nên Nr ~ 0 -> Rt ~ 0 => p(term_i|q, R = 0 ) = Nt / N ( số tài liệu chứa term / tổng tài liệu).
 
 Ví dụ:
 
@@ -229,9 +266,8 @@ Tập tài liệu:
 
 
 
-- Trường hợp chúng ta biết được một số thông tin về các tài liệu liên quan (tập training, phản hồi từ người dùng,...).
-    - Gọi Rt là số tài liệu mà người dùng đánh giá là có liên quan chứa term t.
-    - Gọi Nr là tổng số tài liệu đánh giá là có liên quan.
+- Trường hợp chúng ta biết được một số thông tin về các tài liệu liên quan (tập training, phản hồi từ người dùng,...) (Có thông tin về Nr,...)
+  
 
    Lúc này, p(term_i|q, R = 1 ) = Rt/Nr = (Rt+0.5) / (Nr+1) (smoothing để tránh Rt = 0 hoặc Rt = Nt ).
 
@@ -269,9 +305,9 @@ d2: small today
 Chỉ mục sẽ có dạng:
 
 
-- today: {'So_luong_tai_lieu': 2, 'Tan_so': 2, 'Posting': [[1, 1, 0.35], [2, 1, 0.35] ], 'Weight: 0.5'}
-- big: {'So_luong_tai_lieu': 1, 'Tan_so': 1, 'Posting': [[1, 1,  0.94] ],'Weight: 1'}
-- small: {'So_luong_tai_lieu': 1, 'Tan_so': 1, 'Posting': [[2, 1, 0.94] ],'Weight: 1'}
+- today: {'So_luong_tai_lieu': 2, 'Tan_so': 2, 'Posting': [[1, 1], [2, 1]], 'Weight: 0.5'}
+- big: {'So_luong_tai_lieu': 1, 'Tan_so': 1, 'Posting': [[1, 1]],'Weight: 1'}
+- small: {'So_luong_tai_lieu': 1, 'Tan_so': 1, 'Posting': [[2, 1] ],'Weight: 1'}
 
 
 ## *2.4. Xử lý truy vấn*
