@@ -170,7 +170,9 @@ Phải cân nhắc lựa chọn các cách tính phù hợp.
 Mô hình độc lập nhị phân ( Binary Independence Model ) là mô hình truy xuất thông tin dựa trên xác suất. Mô hình nãy biểu diễn các tài liệu dưới dạng các vector nhị phân (x1,...xm) với xi = 1 khi term đó xuất hiện và ngược lại. Tương tự với câu truy vấn
 
 Ví dụ:
+
 d1: today big -> (today,big,small) = 1,1,0
+
 d2: small today -> (today,big,small) = 1,0,1
 
 Sự liên quan của truy vấn và tài liệu được biểu diễn thể hiện trong biến nhị phân:
@@ -331,7 +333,7 @@ Hình ảnh dưới đây mô tả lại quy trình hoạt động của mô hì
 ## *2.5. Đánh giá BIM*
 ### Ưu điểm
 
-Dựa trên nền tảng lý thuyết vững chắc,
+Dựa trên nền tảng lý thuyết vững chắc
 
 Về mặt lý thuyết, sơ đồ xếp hạng tối ưu hơn Vector Space. 
 
